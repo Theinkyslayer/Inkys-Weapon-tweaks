@@ -1,0 +1,17 @@
+//weapon pickups
+SHOTA = "SHOTA" {droppedspin = 33  spin = 33}
+SGN2A = "SGN2A" {droppedspin = 33  spin = 33}
+MGN3A = "MGN3A" {droppedspin = 33  spin = 33}
+LAUNA = "LAUNA" {droppedspin = 33  spin = 33}
+PLASA = "PLASA" {droppedspin = 33  spin = 33}
+MGUNA = "MGUNA" {droppedspin = 33  spin = 33}
+BFUGA = "BFUGA" {droppedspin = 33  spin = 33}
+
+//item pickups
+MEDIA = "MEDIA" {}
+STIMA = "STIMA" {}
+SHELA = "SHELA" {}
+ROCKA = "ROCKA" {}
+SBOXA = "SBOXA" {}
+BROKA = "BROKA" {}
+SUITA = "SUITA" {}

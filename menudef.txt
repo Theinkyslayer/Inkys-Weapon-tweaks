@@ -1,0 +1,24 @@
+AddOptionMenu "OptionsMenu"
+{
+	Submenu "Inkys weapon tweaks Options", "IWTOptions"
+}
+optionMenu "IWTOptions"
+{
+	Title "IWT Mod Options"
+	Submenu "Display Options",				"IWTDisplayOptions"
+	Submenu "Gameplay",				        "IWTGameplayOptions"
+}
+OptionMenu "IWTDisplayOptions"
+{
+	Title "IWT Display"
+	StaticText ""
+	Option "Voxels",						"r_drawvoxels",					"OnOff"
+
+}
+OptionMenu "IWTGameplayOptions"
+{
+	Title "IWT Gameplay"
+	StaticText ""
+	Option "Bulletcasings",						"WT_CASINGS",					"OnOff"
+
+}

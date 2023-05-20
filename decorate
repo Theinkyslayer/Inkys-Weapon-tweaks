@@ -1,0 +1,184 @@
+#include "decorate/weapons/shotgun.txt"
+#include "decorate/weapons/Supershotty.txt"
+#include "decorate/weapons/PLSM.txt"
+#include "decorate/weapons/rifle.txt"
+#include "decorate/zombiemanr.txt"
+#include "decorate/weapons/MISL.txt"
+#include "decorate/weapons/bfg.txt"
+ACTOR SHGCasing
+{
+	Height 3
+	Radius 3
+	Speed 2
+    Mass 5
+	Scale 0.4
+	PROJECTILE
+	+DOOMBOUNCE
+	-NOGRAVITY
+    -NOBLOCKMAP
+	States
+	{
+	Spawn:
+	   SHL3 A 0 A_jump(100,10)
+	   SHL3 ABCDEFGH 1 
+	   Loop
+	Death:
+   	   TNT1 A 0 A_jump(128,10)
+   	   TNT1 A 0 A_jump(128,8)
+   	   TNT1 A 0 A_jump(128,6)
+   	   TNT1 A 0 A_jump(128,4)
+	   TNT1 A 0 A_jump(128,2)
+           SHL3 B -1
+           stop
+           SHL3 C -1
+           stop
+           SHL3 D -1
+           stop
+           SHL3 E -1
+           stop
+           SHL3 F -1
+           stop
+           SHLI A -1
+           stop
+	}
+}
+
+
+ACTOR CasingSmoketrail 
+{
+   Speed 2
+   Height 2
+   Radius 4
+   PROJECTILE
+   +NOGRAVITY
+   Scale 1
+   RenderStyle Add
+   Alpha 0.6
+   States
+   {
+   Spawn:
+      SMOK A 0
+      goto death       
+   Death: 
+      SMOK A 1
+      STOP      
+	}
+}
+// Decorate
+ACTOR KickWeapon : Weapon
+{
+	States
+	{
+	Select:
+		TNT1 A 1 A_Raise
+		Wait
+	Deselect:
+		TNT1 A 1 A_Lower
+		Wait
+	Ready:
+        TNT1 A 0 A_ZoomFactor(1.0)
+		TNT1 A 0 
+		TNT1 A 0 
+        TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "BerserkerKick")
+		TNT1 A 0 A_PlaySound("KICK")
+		TNT1 A 0 
+		KICK BCD 1
+		TNT1 A 0 A_FireCustomMissile("KickAttack", 0, 0, 0, -7)
+        KICK H 4
+		KICK IGFEDCBA 1
+		TNT1 A 0 SetPlayerProperty(0, 0, 0)
+		KICK A 0 A_TakeInventory("Kicking", 1)
+		Goto InvisLoop
+	BerserkerKick:
+		TNT1 A 0 A_PlaySound("KICK")
+		TNT1 A 0 
+		KICK ABCDEFG 1
+        TNT1 A 0 A_FireCustomMissile("SuperKickAttack", 0, 0, 0, -7)
+        KICK H 3
+		KICK IGFEDCBA 1
+		TNT1 A 0 SetPlayerProperty(0, 0, 0)
+		KICK A 0 A_TakeInventory("Kicking", 1)
+		Goto InvisLoop
+	AirKick:
+	    TNT1 A 0 A_JumpIfInventory("PowerStrength", 1, "SuperAirKick")
+		TNT1 A 0 A_PlaySound("KICK")
+		TNT1 A 0 
+		KICK JKLMN 1
+        TNT1 A 0 A_FireCustomMissile("AirKickAttack", 0, 0, 0, -31)
+        KICK O 3
+		KICK PQRST 2
+		KICK A 0 A_TakeInventory("Kicking", 1)
+		Goto InvisLoop
+	SuperAirKick:
+		TNT1 A 0 A_PlaySound("KICK")
+		TNT1 A 0 
+		KICK JKLMN 1
+        TNT1 A 0 A_FireCustomMissile("SuperAirKickAttack", 0, 0, 0, -31)
+        KICK O 3
+		KICK PQRST 2
+		KICK A 0 A_TakeInventory("Kicking",1)
+		Goto InvisLoop
+	InvisLoop:
+	Fire:
+		TNT1 A 1
+		Loop
+	}
+}
+
+ACTOR KickAttack : FastProjectile
+{
+	Radius 6
+	Height 6
+	DamageType Kick
+	Projectile 
+	+FORCEXYBILLBOARD
+	+NOEXTREMEDEATH
+	RenderStyle Add
+	Alpha 0.6
+    Damage 8
+    Speed 30
+	SeeSound "None"
+	DeathSound "None"
+	Decal "None"
+	States
+	{
+	Spawn:
+		TNT1 A 1 BRIGHT
+        TNT1 A 1
+		Stop
+	Death:
+		PUFF A 3 A_PlaySound("player/cyborg/fist")
+		PUFF BCD 3
+		Stop
+	}
+}
+
+
+ACTOR SuperKickAttack : KickAttack
+{
+	-NOEXTREMEDEATH
+    Damage 30
+	DamageType ExtremePunches
+}
+
+ACTOR AirKickAttack: KickAttack
+{
+	Radius 12
+	Height 12
+    Damage 40
+}
+
+
+ACTOR SuperAirKickAttack: KickAttack
+{
+	Radius 12
+	Height 12
+	-NOEXTREMEDEATH
+	DamageType ExtremePunches
+    Damage 80
+}
+
+ACTOR Kicking : Inventory
+{
+	Inventory.MaxAmount 1
+}
