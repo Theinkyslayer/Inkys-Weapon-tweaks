@@ -1,0 +1,46 @@
+ACTOR IBFG9000 : Weapon replaces Bfg9000
+{
+Inventory.PickupMessage "You got the BIG. FUCKING. GUN."
+Weapon.Ammogive 45
+Weapon.AmmoType "Cell"
+Weapon.AmmoUse 40
+Weapon.SelectionOrder 200
+Weapon.SlotPriority 100
+Weapon.SlotNumber 7
+Obituary "%o was vapourized %'s BFG."
+//bobstuff
+Weapon.BobRangeX 0.2
+Weapon.BobRangeY 0.6
+Weapon.BobSpeed 1.8
+states
+{
+ready:
+  BFGG A 1 A_weaponready
+loop
+deselect:
+  BFGG A 1 A_lower
+ loop
+
+select:
+  BFGG A 1 A_raise
+  TNT1 A 0 
+ loop
+
+fire:
+BFGG B 14 A_BFGSound
+BFGG C 10 A_GunFlash
+BFGG D 2 A_FIREBFG
+BFGG E 2 A_SetPitch(pitch + 2.4)
+BFGR A 2 
+BFGR B 2
+BFGR C 1
+BFGR D 1
+BFGG A 15
+goto ready
+spawn:
+BFUG A -1
+wait
+goto ready
+stop
+}
+}

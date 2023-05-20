@@ -1,0 +1,49 @@
+ACTOR IRocketlauncher : Weapon replaces rocketlauncher
+{
+Inventory.PickupMessage "You found the Rocketlancher!"
+Weapon.Ammogive 2
+Weapon.AmmoType "RocketAmmo"
+Weapon.AmmoUse 1
+Weapon.SelectionOrder 200
+Weapon.SlotPriority 1
+Weapon.SlotNumber 5
+Obituary "%o was gibbed by %'s rocket launcher."
+//bobstuff
+Weapon.BobRangeX 0.2
+Weapon.BobRangeY 0.6
+Weapon.BobSpeed 1.8
+states
+{
+select:
+  TNT1 A 0 A_raise
+loop
+deselect:
+  MISR B 2
+  MISR A 2
+  TNT1 A 0 A_lower
+wait
+ready:
+  MISR A 2
+  MISR B 2
+goto reallyready
+reallyready:
+  MISG A 1 A_weaponready
+wait
+spawn:
+   LAUN A 1
+loop
+
+fire:
+MISF A 1
+MISF B 2 A_firemissile
+MISF C 2 A_SetPitch(pitch - 0.8)
+MISF D 2 A_SetPitch(pitch + 0.8)
+MISE A 15
+MISE B 2
+MISE C 2
+MISE D 1
+goto reallyready
+}
+}
+
+

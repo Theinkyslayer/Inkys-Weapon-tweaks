@@ -1,0 +1,48 @@
+ACTOR IPlasmaRifle : weapon replaces plasmarifle
+{
+  Weapon.SelectionOrder 100
+  Weapon.AmmoUse 1
+  Weapon.AmmoGive 40
+  Weapon.AmmoType "Cell"
+  Weapon.SlotNumber 6
+  Inventory.PickupMessage "$GOTPLASMA"
+  Tag "$TAG_PLASMARIFLE"
+  //bobstuff
+  Weapon.BobRangeX 0.2
+  Weapon.BobRangeY 0.6
+  Weapon.BobSpeed 1.8
+  States
+  {
+  select: 
+TNT1 A 0 A_raise
+loop
+Deselect: 
+PLSI B 2
+PLSI A 2
+TNT1 A 0 A_lower
+wait
+ready:
+PLSI A 2
+PLSI B 2
+goto reallyready
+reallyready:
+PLSG A 1 A_weaponready
+wait
+  Fire:
+    PLSF A 3 A_FirePlasma
+    PLSR A 2 A_ReFire
+	PLSR B 2
+	PLSR C 25
+	PLSR B 2
+	PLSR A 2
+    Goto reallyready
+  Flash:
+    PLSF A 4 Bright A_Light1
+    Goto LightDone
+    PLSF B 4 Bright A_Light1
+    Goto LightDone
+  Spawn:
+    PLAS A -1
+    Stop
+  }
+}

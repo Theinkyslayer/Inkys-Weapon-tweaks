@@ -1,0 +1,44 @@
+ACTOR Betarifle : Weapon 
+{
+Inventory.PickupMessage "You got the rifle"
+Weapon.Ammogive 25
+Weapon.AmmoType "Clip"
+Weapon.AmmoUse 1
+Weapon.SelectionOrder 200
+Weapon.SlotPriority 1
+Weapon.SlotNumber 4
+Attacksound "DSPISTOL/DSPISTOL"
+Obituary "%o was torn to pieces by %'s Shotgun."
+//bobstuff
+Weapon.BobRangeX 0.2
+Weapon.BobRangeY 0.6
+Weapon.BobSpeed 1.8
+states
+{
+ready:
+  PRIF A 1 A_weaponready
+loop
+deselect:
+  PRIF A 1 A_lower
+ loop
+
+select:
+  PRIF A 1 A_raise
+ loop
+
+
+
+fire:
+PRIF D 2
+PRIF E 5 A_firebullets (0,0,1,10,"bulletpuff")
+TNT1 A 0 A_SetPitch(pitch + 1.2)
+PRIF C 2 
+PRIF B 2 A_SetPitch(pitch - 1.2)
+PRIF A 10 A_refire
+goto ready
+
+spawn:
+MGN3 A -1
+stop
+}
+}
